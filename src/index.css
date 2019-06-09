@@ -36,8 +36,13 @@ ul {
   list-style: none;
   border: 1px solid #2832c9;
   border-radius: 4px;
-  padding: 6px;
-  
+  padding: 6px; 
+}
+
+li {
+  border-bottom: 1px solid #2832c9;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 label{

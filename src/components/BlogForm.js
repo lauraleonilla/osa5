@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
+import Togglable from '../components/Togglable'
 
 const BlogForm = ({ blogHandler }) => {
   const [blogTitle, setBlogTitle] = useState('')
@@ -18,8 +19,11 @@ const BlogForm = ({ blogHandler }) => {
       setUrl(url)
   }
 
+  const blogFormRef = React.createRef()
+
   const addBlog = async (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisibility()
     const blogObject = {
         title: blogTitle,
         author: author,
@@ -34,6 +38,7 @@ const BlogForm = ({ blogHandler }) => {
   }
 
   return (
+  <Togglable buttonLabel='Create new' ref={blogFormRef}>
     <div className='blogFormDiv'>
       <form onSubmit={addBlog}>
         <div>
@@ -64,6 +69,7 @@ const BlogForm = ({ blogHandler }) => {
         </div>
       </form>
     </div>
+    </Togglable>
   )
 }
 

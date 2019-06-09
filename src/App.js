@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/loginService'
 import blogService from './services/blogService'
 
-import Blog from './components/Blog'
+import Blog from './components/ToggleBlogView'
 import Notification from './components/Notification'
 import Error from './components/Error'
 import LoginForm from './components/LoginForm'
@@ -72,6 +72,18 @@ const App = () => {
     }, 5000)
   }
 
+  const loginForm = () => (
+    <Togglable buttonLabel='Login'>
+      <LoginForm
+        login={handleLogin}
+        password={password}
+        username={username}
+        usernameHandler={handleSetUserName}
+        passwordHandler={handleSetPassword}
+      />
+    </Togglable>
+  )
+  
   return (
     <div className='appDiv'>
       <Notification message={message} />
@@ -79,15 +91,7 @@ const App = () => {
       {user === null ? (
         <div>
           <h2>Login</h2>
-          <Togglable buttonLabel="Login">
-            <LoginForm
-              login={handleLogin}
-              password={password}
-              username={username}
-              usernameHandler={handleSetUserName}
-              passwordHandler={handleSetPassword}
-            />
-          </Togglable>
+          {loginForm()}
         </div>
       ) : (
         <div>
