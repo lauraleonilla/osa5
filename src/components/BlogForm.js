@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
 
-const BlogForm = ({ handleSetBlogs }) => {
+const BlogForm = ({ blogHandler }) => {
   const [blogTitle, setBlogTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl]= useState('')
@@ -26,7 +26,8 @@ const BlogForm = ({ handleSetBlogs }) => {
         url: url
     }
     const newBlog = await blogService.create(blogObject)
-    handleSetBlogs(newBlog)
+    const message = `Added blog ${blogTitle} by ${author}`
+    blogHandler(newBlog, message)
     setBlogTitle('')
     setAuthor('')
     setUrl('')
@@ -58,7 +59,7 @@ const BlogForm = ({ handleSetBlogs }) => {
         </div>
         <div>
           <button id='saveButton' type='submit'>
-            Tallenna
+            Save
           </button>
         </div>
       </form>

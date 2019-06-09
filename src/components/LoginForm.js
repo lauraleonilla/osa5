@@ -1,26 +1,26 @@
 import React from 'react'
 
-const LoginForm = ({ handleLogin, username, password, handleSetUserName, handleSetPassword }) => (
-    <form onSubmit={handleLogin}>
+const LoginForm = ({ login, username, password, usernameHandler, passwordHandler }) => (
+    <form onSubmit={login}>
       <div>
-      <label>Käyttäjätunnus</label>
+      <label>Username</label>
           <input
             type='text'
             value={username}
             name='Username'
-            onChange={({ target }) => handleSetUserName(target.value)}
+            onChange={({ target }) => usernameHandler(target.value)}
           />
       </div>
       <div>
-      <label>Salasana</label>
+      <label>Password</label>
           <input
             type='password'
             value={password}
             name='Password'
-            onChange={({ target }) => handleSetPassword(target.value)}
+            onChange={({ target }) => passwordHandler(target.value)}
           />
       </div>
-      <button type='submit'>Kirjaudu</button>
+      <button type='submit'>Login</button>
     </form>      
   )
 
