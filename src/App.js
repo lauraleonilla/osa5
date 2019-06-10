@@ -32,8 +32,8 @@ const App = () => {
   }, [])
 
   const handleLogin = async event => {
-    event.preventDefault()
     try {
+      event.preventDefault()
       const user = await loginService.login({
         username,
         password
@@ -64,20 +64,31 @@ const App = () => {
     setPassword(password)
   }
 
-  const handleLikes = (id) => {
+  const handleLikes = async id => {
     const blog = blogs.find(e => e.id === id)
-    const updatedBlog = { ...blog, likes: blog.likes += 1 }
-    blogService
-    .update(id, updatedBlog).then(returnedBlog => {
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-    })
-    .catch(error => {
+    const updatedBlog = { ...blog, likes: (blog.likes += 1), user: blog.user.id}
+    try {
+      const newBlog = await blogService.update(id, updatedBlog)
+      setBlogs(blogs.map(blog => (blog.id !== id ? blog : newBlog)))
+    } catch (exeption) {
       setErrorMessage('Blogia ei löydy')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
       setBlogs(blogs.filter(n => n.id !== id))
-    })
+    }
+  }
+
+  const blogRows = () => {
+    const sorted = blogs.sort((a, b) => b.likes - a.likes)
+    const rows = sorted.map(blog => (
+      <Blog
+        key={blog.id}
+        blog={blog}
+        likesHandler={() => handleLikes(blog.id)}
+      />
+    ))
+    return rows
   }
 
   const handleSetBlogs = (blog, message) => {
@@ -99,7 +110,7 @@ const App = () => {
       />
     </Togglable>
   )
-  
+
   return (
     <div className='appDiv'>
       <Notification message={message} />
@@ -117,11 +128,7 @@ const App = () => {
             <button onClick={() => handleLogout()}>Logout</button>
           </div>
           <BlogForm blogHandler={handleSetBlogs} />
-          <ul>
-            {blogs.map(blog => (
-              <Blog key={blog.id} blog={blog} likesHandler={() => handleLikes(blog.id)}/>
-            ))}
-          </ul>
+          <ul>{blogRows()}</ul>
         </div>
       )}
     </div>
