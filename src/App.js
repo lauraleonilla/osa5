@@ -64,6 +64,22 @@ const App = () => {
     setPassword(password)
   }
 
+  const handleLikes = (id) => {
+    const blog = blogs.find(e => e.id === id)
+    const updatedBlog = { ...blog, likes: blog.likes += 1 }
+    blogService
+    .update(id, updatedBlog).then(returnedBlog => {
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    })
+    .catch(error => {
+      setErrorMessage('Blogia ei löydy')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      setBlogs(blogs.filter(n => n.id !== id))
+    })
+  }
+
   const handleSetBlogs = (blog, message) => {
     setBlogs(blogs.concat(blog))
     setMessage(message)
@@ -103,7 +119,7 @@ const App = () => {
           <BlogForm blogHandler={handleSetBlogs} />
           <ul>
             {blogs.map(blog => (
-              <Blog key={blog.id} blog={blog} />
+              <Blog key={blog.id} blog={blog} likesHandler={() => handleLikes(blog.id)}/>
             ))}
           </ul>
         </div>
