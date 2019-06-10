@@ -66,7 +66,11 @@ const App = () => {
 
   const handleLikes = async id => {
     const blog = blogs.find(e => e.id === id)
-    const updatedBlog = { ...blog, likes: (blog.likes += 1), user: blog.user.id}
+    const updatedBlog = {
+      ...blog,
+      likes: (blog.likes += 1),
+      user: blog.user.id
+    }
     try {
       const newBlog = await blogService.update(id, updatedBlog)
       setBlogs(blogs.map(blog => (blog.id !== id ? blog : newBlog)))
@@ -79,28 +83,28 @@ const App = () => {
     }
   }
 
-  const removeBlog = (deleteId) => {
+  const removeBlog = deleteId => {
     deleteId = blogs.find(e => e.id === deleteId)
-    if(window.confirm('Poistetaanko blogi')) {
+    if (window.confirm('Poistetaanko blogi')) {
       deleteId = deleteId.id
 
-        blogService.remove(deleteId)
-        const updatedBlogs = [ ...blogs ]
-        blogs.forEach(e => e.id === deleteId)
-        for(let i = 0; i < blogs.length; i ++) {
-          let blog = blogs[i]
-          if(blog.id === deleteId) {
-            updatedBlogs.splice(i, 1)
-            setMessage('Blogi poistettu')
-            setTimeout(() => {
-              setMessage(null)
-            }, 3000)
-            break
-          }
+      blogService.remove(deleteId)
+      const updatedBlogs = [...blogs]
+      blogs.forEach(e => e.id === deleteId)
+      for (let i = 0; i < blogs.length; i++) {
+        let blog = blogs[i]
+        if (blog.id === deleteId) {
+          updatedBlogs.splice(i, 1)
+          setMessage('Blogi poistettu')
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
+          break
         }
-        setBlogs(updatedBlogs)
+      }
+      setBlogs(updatedBlogs)
     }
-}
+  }
 
   const blogRows = () => {
     const sorted = blogs.sort((a, b) => b.likes - a.likes)

@@ -27,10 +27,9 @@ const Blog = React.forwardRef((props, ref) => {
         <p>Added by: {props.blog.user.username}</p>
         <a href={`http://${props.blog.url}`}>{props.blog.url}</a>
         <br />
-        {props.user.username === props.blog.user.username ? (removeButton()
-        ): (
-         null
-        )}
+        {props.user.username === props.blog.user.username
+          ? removeButton()
+          : null}
       </div>
     </div>
   )
