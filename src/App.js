@@ -83,26 +83,33 @@ const App = () => {
     }
   }
 
-  const removeBlog = deleteId => {
+  const removeBlog = async deleteId => {
     deleteId = blogs.find(e => e.id === deleteId)
     if (window.confirm('Poistetaanko blogi')) {
       deleteId = deleteId.id
-
-      blogService.remove(deleteId)
-      const updatedBlogs = [...blogs]
-      blogs.forEach(e => e.id === deleteId)
-      for (let i = 0; i < blogs.length; i++) {
-        let blog = blogs[i]
-        if (blog.id === deleteId) {
-          updatedBlogs.splice(i, 1)
-          setMessage('Blogi poistettu')
-          setTimeout(() => {
-            setMessage(null)
-          }, 3000)
-          break
+      try {
+        await blogService.remove(deleteId)
+        const updatedBlogs = [...blogs]
+        blogs.forEach(e => e.id === deleteId)
+        for (let i = 0; i < blogs.length; i++) {
+          let blog = blogs[i]
+          if (blog.id === deleteId) {
+            updatedBlogs.splice(i, 1)
+            setMessage('Blogi poistettu')
+            setTimeout(() => {
+              setMessage(null)
+            }, 3000)
+            break
+          }
+          setBlogs(updatedBlogs)
         }
+      } catch (exeption) {
+        setErrorMessage('Blogia ei löydy')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setBlogs(blogs.filter(n => n.id !== deleteId))
       }
-      setBlogs(updatedBlogs)
     }
   }
 
