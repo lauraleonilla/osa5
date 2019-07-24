@@ -19,9 +19,9 @@ const Blog = React.forwardRef((props, ref) => {
   return (
     <div>
       <li onClick={toggleVisibility}>
-        {props.blog.title} {props.blog.author}
+        <h2>{props.blog.title}</h2> Written by: {props.blog.author}
       </li>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='togglable'>
         <span>Likes: {props.blog.likes}</span>
         <button onClick={props.likesHandler}>Like</button>
         <p>Added by: {props.blog.user.username}</p>
@@ -30,6 +30,10 @@ const Blog = React.forwardRef((props, ref) => {
         {props.user.username === props.blog.user.username
           ? removeButton()
           : null}
+        <br />
+        <button onClick={toggleVisibility} className='toggleBtn'>
+          {props.buttonLabel || 'Show less'}
+        </button>
       </div>
     </div>
   )

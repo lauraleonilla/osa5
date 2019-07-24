@@ -92,7 +92,7 @@ const App = () => {
         const updatedBlogs = [...blogs]
         blogs.forEach(e => e.id === deleteId)
         for (let i = 0; i < blogs.length; i++) {
-          let blog = blogs[i]
+          const blog = blogs[i]
           if (blog.id === deleteId) {
             updatedBlogs.splice(i, 1)
             setMessage('Blogi poistettu')
@@ -117,6 +117,7 @@ const App = () => {
     const sorted = blogs.sort((a, b) => b.likes - a.likes)
     const rows = sorted.map(blog => (
       <Blog
+        className='toggleBlog'
         key={blog.id}
         blog={blog}
         user={user}
