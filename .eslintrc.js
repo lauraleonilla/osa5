@@ -23,6 +23,11 @@ module.exports = {
             "error",
             2  
         ],
+        "prefer-const": ["error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }],
+        "no-use-before-define": ["error", { "functions": true, "classes": true }],
         "linebreak-style": [
             "error",
             "unix"

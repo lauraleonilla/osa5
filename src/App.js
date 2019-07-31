@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/loginService'
 import blogService from './services/blogService'
 
-import Blog from './components/ToggleBlogView'
+import ToggleBlog from './components/ToggleBlogView'
+import BlogContents from './components/BlogContents'
 import Notification from './components/Notification'
 import Error from './components/Error'
 import LoginForm from './components/LoginForm'
@@ -115,15 +116,14 @@ const App = () => {
 
   const blogRows = () => {
     const sorted = blogs.sort((a, b) => b.likes - a.likes)
-    const rows = sorted.map(blog => (
-      <Blog
-        className='toggleBlog'
-        key={blog.id}
-        blog={blog}
-        user={user}
-        likesHandler={() => handleLikes(blog.id)}
-        removeHandler={() => removeBlog(blog.id)}
-      />
+    const rows = sorted.map((blog, i) => (
+      <ToggleBlog key={i} blog={blog}>
+        <BlogContents
+          blog={blog}
+          user={user}
+          removeHandler={() => removeBlog(blog.id)}
+          likesHandler={() => handleLikes(blog.id)}/>
+      </ToggleBlog>
     ))
     return rows
   }
