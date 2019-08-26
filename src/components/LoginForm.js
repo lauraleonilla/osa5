@@ -4,17 +4,16 @@ const LoginForm = ({
   login,
   username,
   password,
-  usernameHandler,
   passwordHandler
 }) => (
   <form onSubmit={login}>
     <div>
       <label>Username</label>
       <input
-        type='text'
-        value={username}
+        type={username.type}
+        value={username.value}
         name='Username'
-        onChange={({ target }) => usernameHandler(target.value)}
+        onChange={username.onChange}
       />
     </div>
     <div>

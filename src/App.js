@@ -11,9 +11,11 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
+import { useField } from './hooks/index'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
+  const username = useField('text')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
@@ -36,13 +38,12 @@ const App = () => {
     try {
       event.preventDefault()
       const user = await loginService.login({
-        username,
+        username: username.value,
         password
       })
       window.localStorage.setItem('loggedInBlogger', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
       setPassword('')
     } catch (exeption) {
       setErrorMessage('Käyttäjätunnus tai salasana väärin')
@@ -55,10 +56,6 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInBlogger')
     window.location.reload()
-  }
-
-  const handleSetUserName = username => {
-    setUsername(username)
   }
 
   const handleSetPassword = password => {
@@ -142,7 +139,6 @@ const App = () => {
         login={handleLogin}
         password={password}
         username={username}
-        usernameHandler={handleSetUserName}
         passwordHandler={handleSetPassword}
       />
     </Togglable>
