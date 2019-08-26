@@ -9,19 +9,15 @@ const LoginForm = ({
     <div>
       <label>Username</label>
       <input
-        type={username.type}
-        value={username.value}
         name='Username'
-        onChange={username.onChange}
+        {...username}
       />
     </div>
     <div>
       <label>Password</label>
       <input
-        type='password'
-        value={password.value}
         name='Password'
-        onChange={password.onChange}
+        {...password}
       />
     </div>
     <button type='submit'>Login</button>

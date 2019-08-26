@@ -16,7 +16,7 @@ import { useField } from './hooks/index'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const username = useField('text')
-  const password = useField('text')
+  const password = useField('password')
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
   const [user, setUser] = useState(null)
@@ -44,8 +44,6 @@ const App = () => {
       window.localStorage.setItem('loggedInBlogger', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      password.reset()
-      username.reset()
     } catch (exeption) {
       setErrorMessage('Käyttäjätunnus tai salasana väärin')
       setTimeout(() => {
@@ -116,7 +114,8 @@ const App = () => {
           blog={blog}
           user={user}
           removeHandler={() => removeBlog(blog.id)}
-          likesHandler={() => handleLikes(blog.id)}/>
+          likesHandler={() => handleLikes(blog.id)}
+        />
       </ToggleBlog>
     ))
     return rows
@@ -130,15 +129,26 @@ const App = () => {
     }, 5000)
   }
 
-  const loginForm = () => (
-    <Togglable buttonLabel='Login'>
-      <LoginForm
-        login={handleLogin}
-        password={password}
-        username={username}
-      />
-    </Togglable>
-  )
+  const omitReset = (props) => {
+    delete props.reset
+    return props
+  }
+
+  const loginForm = () => {
+
+    const usernameProps = omitReset(username)
+    const passWordProps = omitReset(password)
+
+    return (
+      <Togglable buttonLabel='Login'>
+        <LoginForm
+          login={handleLogin}
+          username={usernameProps}
+          password={passWordProps}
+        />
+      </Togglable>
+    )
+  }
 
   return (
     <div className='appDiv'>
