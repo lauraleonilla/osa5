@@ -4,7 +4,6 @@ const LoginForm = ({
   login,
   username,
   password,
-  passwordHandler
 }) => (
   <form onSubmit={login}>
     <div>
@@ -20,9 +19,9 @@ const LoginForm = ({
       <label>Password</label>
       <input
         type='password'
-        value={password}
+        value={password.value}
         name='Password'
-        onChange={({ target }) => passwordHandler(target.value)}
+        onChange={password.onChange}
       />
     </div>
     <button type='submit'>Login</button>

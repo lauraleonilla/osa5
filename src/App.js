@@ -16,7 +16,7 @@ import { useField } from './hooks/index'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const username = useField('text')
-  const [password, setPassword] = useState('')
+  const password = useField('text')
   const [errorMessage, setErrorMessage] = useState(null)
   const [message, setMessage] = useState(null)
   const [user, setUser] = useState(null)
@@ -39,12 +39,13 @@ const App = () => {
       event.preventDefault()
       const user = await loginService.login({
         username: username.value,
-        password
+        password: password.value
       })
       window.localStorage.setItem('loggedInBlogger', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setPassword('')
+      password.reset()
+      username.reset()
     } catch (exeption) {
       setErrorMessage('Käyttäjätunnus tai salasana väärin')
       setTimeout(() => {
@@ -56,10 +57,6 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInBlogger')
     window.location.reload()
-  }
-
-  const handleSetPassword = password => {
-    setPassword(password)
   }
 
   const handleLikes = async id => {
@@ -139,7 +136,6 @@ const App = () => {
         login={handleLogin}
         password={password}
         username={username}
-        passwordHandler={handleSetPassword}
       />
     </Togglable>
   )
