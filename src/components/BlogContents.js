@@ -7,7 +7,7 @@ const BlogContents = props => {
   }
 
   return (
-    <li>
+    <li className='blog'>
       <span>Likes: {props.blog.likes}</span>
       <button onClick={props.likesHandler}>Like</button>
       <p>Added by: {props.blog.user.username}</p>

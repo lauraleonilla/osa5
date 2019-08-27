@@ -3,7 +3,6 @@ const blogs = [
 ]
 
 const getAll = () => {
-  console.log(blogs)
   return Promise.resolve(blogs)
 }
 

@@ -1,8 +1,7 @@
 import React from 'react'
 import App from './App'
 import { render, waitForElement } from '@testing-library/react'
-import mocks from './services/__mocks__/blogs'
-jest.mock(mocks)
+jest.mock('./services/blogService')
 
 describe('<App />', () => {
   test('if no user logged, notes are not rendered', async () => {
@@ -12,9 +11,9 @@ describe('<App />', () => {
     component.rerender(<App />)
 
     await waitForElement(
-      () => component.getByText('login')
+      () => component.container.querySelector('.loginBtn')
     )
-    const notes = component.container.querySelectorAll('.blog')
-    expect(notes.length).toBe(1)
+    const blogs = component.container.querySelectorAll('.blog')
+    expect(blogs.length).toBe(0)
   })
 })

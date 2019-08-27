@@ -16,7 +16,7 @@ const ToggleBlog = React.forwardRef((props, ref) => {
   })
 
   return (
-    <div className='blog'>
+    <div>
       <li onClick={toggleVisibility} className='toggleView'>
         {props.blog.title} Written by: {props.blog.author}
       </li>
