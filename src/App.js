@@ -164,7 +164,7 @@ const App = () => {
           <h2>Blogs</h2>
           <div className='userInfo'>
             <label>{user.name} is logged in</label>
-            <button onClick={() => handleLogout()}>Logout</button>
+            <button onClick={() => handleLogout()} className='logoutBtn'>Logout</button>
           </div>
           <BlogForm blogHandler={handleSetBlogs} />
           <ul>{blogRows()}</ul>
